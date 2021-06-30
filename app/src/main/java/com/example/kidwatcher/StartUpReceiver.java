@@ -9,10 +9,15 @@ import android.telephony.TelephonyManager;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class StartUpReceiver extends BroadcastReceiver
 {
 	Context context;
 	private static String previousStatus = "idle";
+//	private static Instant start = Instant.now();
+//	private static Instant end = Instant.now();
 
 	@Override
 	public void onReceive(Context context, Intent intent)
@@ -65,6 +70,7 @@ public class StartUpReceiver extends BroadcastReceiver
 		{
 			if (caller != null)
 			{
+//				start = Instant.now();
 				if (previousStatus.equals("idle"))
 				{
 					logPhone(caller, "outgoing");
@@ -80,6 +86,11 @@ public class StartUpReceiver extends BroadcastReceiver
 		{
 			if (caller != null)
 			{
+//				end = Instant.now();
+//				Duration timeElapsed = Duration.between(start, end);
+//				if (){
+//					logPhone(caller, "time elapsed: " + timeElapsed.getSeconds());
+//				}
 				previousStatus = "idle";
 			}
 		}
