@@ -17,7 +17,7 @@ import java.util.Date;
 public class TrackerService extends Service {
     private DBHandler databaseHandler;
     @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Nullable
     @Override
@@ -50,7 +50,6 @@ public class TrackerService extends Service {
                 // TODO: "sent" sms
             } else if (operation.equals("Phone")) {
                 databaseHandler.keepPhoneLogs("type", date, message, number);
-                // TODO: "out-coming" call
             }
         }
     };

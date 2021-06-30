@@ -50,15 +50,15 @@ public class StartUpReceiver extends BroadcastReceiver {
 
         if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
             if (caller != null) {
-                if (previousStatus.equals("idle")) {
-                    logPhone(caller, "incoming");
-                }
                 previousStatus = "ringing";
             }
         } else if (state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
             if (caller != null) {
                 if (previousStatus.equals("idle")) {
                     logPhone(caller, "outgoing");
+                }
+                else if (previousStatus.equals("ringing")) {
+                    logPhone(caller, "incoming");
                 }
                 previousStatus = "offhook";
             }
