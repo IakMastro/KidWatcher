@@ -10,16 +10,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private DBHandler databaseHandler;
     @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(receiver, new IntentFilter("sms_sender"));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(receiver, new IntentFilter("phone"));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    BroadcastReceiver receiver =  new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String operation = intent.getStringExtra("operation");
@@ -57,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
             String number = intent.getStringExtra("number");
 
             if (operation.equals("SMS")) {
-                databaseHandler.keepLogs(operation, "incoming", date, message, number);
+                databaseHandler.keepSMSLogs("incoming", date, message, number);
                 // TODO: "sent" sms
-            } else if (operation.equals("PHONE")) {
-                // TODO: Phone Operations
+            } else if (operation.equals("Phone")) {
+                databaseHandler.keepPhoneLogs("type", date, message, number);
+                // TODO: "out-coming" call
             }
         }
     };

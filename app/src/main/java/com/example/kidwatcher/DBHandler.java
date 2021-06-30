@@ -17,10 +17,11 @@ public class DBHandler {
         logs.keepSynced(true);
     }
 
-    public void keepLogs(String operation, String action,
-                         String date, String message, String number) {
-        if (operation.equals("SMS")) {
-            logs.child(operation).child(number).child(date).child(action).setValue(message);
-        }
+    public void keepSMSLogs(String action, String date, String message, String number) {
+        logs.child("SMS").child(number).child(date).push().child(action).setValue(message);
+    }
+
+    public void keepPhoneLogs(String action, String date, String status, String number) {
+        logs.child("CALL").child(number).child(date).push().child(action).setValue(status);
     }
 }
