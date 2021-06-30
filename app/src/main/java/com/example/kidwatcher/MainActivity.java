@@ -28,7 +28,14 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 
 		int PERMISSIONS_CHECK = 1;
-		String[] PERMISSIONS = {Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG, Manifest.permission.FOREGROUND_SERVICE};
+		String[] PERMISSIONS = {
+				Manifest.permission.RECEIVE_BOOT_COMPLETED,
+				Manifest.permission.RECEIVE_SMS,
+				Manifest.permission.READ_SMS,
+				Manifest.permission.READ_PHONE_STATE,
+				Manifest.permission.READ_CALL_LOG,
+				Manifest.permission.FOREGROUND_SERVICE
+		};
 		checkPermissions(PERMISSIONS, PERMISSIONS_CHECK);
 
 		startService(new Intent(this, TrackerService.class));
