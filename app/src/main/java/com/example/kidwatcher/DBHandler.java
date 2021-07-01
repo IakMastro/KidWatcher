@@ -23,8 +23,10 @@ public class DBHandler
 		logs.child("SMS").child(number).child(date).push().child(action).setValue(message);
 	}
 
-	public void keepPhoneLogs(String action, String date, String status, String number)
+	public void keepPhoneLogs(String date, String status, String number, String duration)
 	{
-		logs.child("CALL").child(number).child(date).push().child(action).setValue(status);
+		String callId = logs.child("CALL").child(number).child(date).push().getKey();
+		logs.child("CALL").child(number).child(date).child(callId).child("type").setValue(status);
+		logs.child("CALL").child(number).child(date).child(callId).child("duration").setValue(duration);
 	}
 }

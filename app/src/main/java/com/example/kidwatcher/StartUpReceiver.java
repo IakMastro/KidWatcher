@@ -16,8 +16,9 @@ public class StartUpReceiver extends BroadcastReceiver
 {
 	Context context;
 	private static String previousStatus = "idle";
-//	private static Instant start = Instant.now();
-//	private static Instant end = Instant.now();
+	private static boolean justRang = false;
+	private static Instant start = Instant.now();
+	private static Instant end = Instant.now();
 
 	@Override
 	public void onReceive(Context context, Intent intent)
@@ -63,6 +64,7 @@ public class StartUpReceiver extends BroadcastReceiver
 		{
 			if (caller != null)
 			{
+				justRang = true;
 				previousStatus = "ringing";
 			}
 		}
@@ -70,15 +72,7 @@ public class StartUpReceiver extends BroadcastReceiver
 		{
 			if (caller != null)
 			{
-//				start = Instant.now();
-				if (previousStatus.equals("idle"))
-				{
-					logPhone(caller, "outgoing");
-				}
-				else if (previousStatus.equals("ringing"))
-				{
-					logPhone(caller, "incoming");
-				}
+				start = Instant.now();
 				previousStatus = "offhook";
 			}
 		}
@@ -86,11 +80,53 @@ public class StartUpReceiver extends BroadcastReceiver
 		{
 			if (caller != null)
 			{
-//				end = Instant.now();
-//				Duration timeElapsed = Duration.between(start, end);
-//				if (){
-//					logPhone(caller, "time elapsed: " + timeElapsed.getSeconds());
-//				}
+				if (previousStatus.equals("offhook"))
+				{
+					end = Instant.now();
+					int timeElapsed = (int) (Duration.between(start, end).toMillis() / 1000);
+					String callDuration = "";
+
+					if (timeElapsed >= 86400)
+					{
+						int days = timeElapsed / 86400;
+						int hours = (timeElapsed % 86400) / 3600;
+						int minutes = ((timeElapsed % 86400) % 3600) / 60;
+						int seconds = ((timeElapsed % 86400) % 3600) % 60;
+						callDuration = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+					}
+					else if (timeElapsed >= 3600)
+					{
+						int hours = timeElapsed / 3600;
+						int minutes = (timeElapsed % 3600) / 60;
+						int seconds = (timeElapsed % 3600) % 60;
+						callDuration = hours + "h " + minutes + "m " + seconds + "s";
+					}
+					else if (timeElapsed >= 60)
+					{
+						int minutes = timeElapsed / 60;
+						int seconds = timeElapsed % 60;
+						callDuration = minutes + "m " + seconds + "s";
+					}
+					else
+					{
+						callDuration = timeElapsed + "s";
+					}
+
+					if (justRang)
+					{
+						justRang = false;
+						logPhone(caller, "incoming", callDuration);
+					}
+					else
+					{
+						logPhone(caller, "outgoing", callDuration);
+					}
+				}
+				else if (previousStatus.equals("ringing"))
+				{
+					justRang = false;
+					logPhone(caller, "incoming", "unanswered");
+				}
 				previousStatus = "idle";
 			}
 		}
@@ -105,12 +141,13 @@ public class StartUpReceiver extends BroadcastReceiver
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
-	void logPhone(String number, String state)
+	void logPhone(String number, String status, String duration)
 	{
 		Intent intent = new Intent("phone");
 		intent.putExtra("operation", "Phone");
 		intent.putExtra("number", number);
-		intent.putExtra("message", state);
+		intent.putExtra("status", status);
+		intent.putExtra("duration", duration);
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }

@@ -47,6 +47,8 @@ public class TrackerService extends Service
 			String date = formatter.format(new Date());
 			String message = intent.getStringExtra("message");
 			String number = intent.getStringExtra("number");
+			String status = intent.getStringExtra("status");
+			String duration = intent.getStringExtra("duration");
 
 			if (operation.equals("SMS"))
 			{
@@ -55,7 +57,7 @@ public class TrackerService extends Service
 			}
 			else if (operation.equals("Phone"))
 			{
-				databaseHandler.keepPhoneLogs("type", date, message, number);
+				databaseHandler.keepPhoneLogs(date, status, number, duration);
 			}
 		}
 	};
