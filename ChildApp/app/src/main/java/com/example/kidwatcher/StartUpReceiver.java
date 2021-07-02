@@ -25,7 +25,7 @@ public class StartUpReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 		this.context = context;
-		Log.d("***STARTUPRECEIVER", "***\nSTARTUPRECEIVER");
+//		Log.d("***STARTUPRECEIVER", "***\nSTARTUPRECEIVER");
 
 		String action = intent.getAction();
 		if (action.equals("android.provider.Telephony.SMS_RECEIVED")) doSms(intent);

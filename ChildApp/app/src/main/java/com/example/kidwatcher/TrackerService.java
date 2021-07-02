@@ -62,29 +62,24 @@ public class TrackerService extends Service implements LocationListener
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-//		criteria.setHorizontalAccuracy(Criteria.ACCURACY_LOW);
-//		criteria.setVerticalAccuracy(Criteria.ACCURACY_LOW);
-//		criteria.setAltitudeRequired(false);
-//		criteria.setBearingRequired(false);
-//		criteria.setCostAllowed(false);
-//		criteria.setSpeedRequired(false);
-//		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		Log.d("***PROVIDER", "***\nABOVE GETBESTPROVIDER");
-		String provider = locationManager.getBestProvider(criteria, true);
-		Log.d("***OUTIF", "***\nOUTSIDE IF PROVIDER NOT NULL");
+		//		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		//		criteria.setHorizontalAccuracy(Criteria.ACCURACY_LOW);
+		//		criteria.setVerticalAccuracy(Criteria.ACCURACY_LOW);
+		//		criteria.setAltitudeRequired(false);
+		//		criteria.setBearingRequired(false);
+		//		criteria.setCostAllowed(false);
+		//		criteria.setSpeedRequired(false);
+		//		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		String provider = locationManager.getBestProvider(criteria, false);
 		if (provider != null)
 		{
-			Log.d("***IF", "***\nIN IF PROVIDER NOT NULL");
 			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
 			{
 				Toast.makeText(this, "You need to give the location permissions...", Toast.LENGTH_LONG).show();
 			}
 			location = locationManager.getLastKnownLocation(provider);
 			onLocationChanged(location);
-			locationManager.requestLocationUpdates(provider, 5000, 0f, this); // 300.000
-			//			Log.d("test", "Latitude: " + location.getLatitude() + "\tLongitude: " + location.getLongitude());
-			Log.d("***LATLON", "***\nLAT = " + location.getLatitude() + "\nLON = " + location.getLongitude());
+			locationManager.requestLocationUpdates(provider, 5000, 0, this); // 300.000
 		}
 
 		return START_STICKY;
@@ -106,17 +101,17 @@ public class TrackerService extends Service implements LocationListener
 
 			if (operation.equals("SMS"))
 			{
-				Log.d("***TRACKERSERVICE", "***\nTRACKERSERVICE");
+//				Log.d("***TRACKERSERVICE", "***\nTRACKERSERVICE");
 				databaseHandler.keepSMSLogs(date, status, number, message);
 			}
 			else if (operation.equals("Phone"))
 			{
 				databaseHandler.keepPhoneLogs(date, status, number, duration);
 			}
-			else if (operation.equals("GPS"))
-			{
-				databaseHandler.keepLocationLogs(lat, lon);
-			}
+//			else if (operation.equals("GPS"))
+//			{
+//				databaseHandler.keepLocationLogs(lat, lon);
+//			}
 		}
 	};
 
@@ -124,6 +119,10 @@ public class TrackerService extends Service implements LocationListener
 	public void onLocationChanged(@NonNull Location location)
 	{
 		this.location = location;
+		String lat = location.getLatitude() + "";
+		String lon = location.getLongitude() + "";
+//		Log.d("***onLocationChanged", "***\nLAT = " + lat + "\nLON = " + lon);
+		databaseHandler.keepLocationLogs(lat, lon);
 	}
 
 	class smsOutgoing extends ContentObserver
