@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ParentsApp</string>
+    <string name="call_picture">call pic</string>
+    <string name="sms_picture">Sms Pic</string>
+</resources>

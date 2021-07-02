@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "421606441345",
+    "firebase_url": "https://kid-watcher-8403f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kid-watcher-8403f",
+    "storage_bucket": "kid-watcher-8403f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421606441345:android:df51c87c346672f4afe880",
+        "android_client_info": {
+          "package_name": "com.example.parentsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421606441345-u4ncodqta8cp2fc06g1vpjvagpq4v9g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeHE5KIhaJIBRKvU3-pUfg-HCxJLyDL-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421606441345-u4ncodqta8cp2fc06g1vpjvagpq4v9g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
