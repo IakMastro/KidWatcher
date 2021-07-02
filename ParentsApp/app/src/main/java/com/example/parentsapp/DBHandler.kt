@@ -10,9 +10,7 @@ class DBHandler(private val operation: String) {
 
     init {
         val database = FirebaseDatabase.getInstance(url)
-        database.setPersistenceEnabled(true)
         logs = database.reference
-        logs.keepSynced(true)
         SMSList = ArrayList<SMS>()
         callList = ArrayList<Call>()
 

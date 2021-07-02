@@ -26,6 +26,12 @@ class SMSAdapter(val smsList: ArrayList<SMS>): RecyclerView.Adapter<SMSAdapter.V
         }
 
         public fun bind(sms: SMS) {
+            if (sms.type == "incoming") {
+                statusImageView.setImageResource(R.drawable.incoming_sms)
+            } else {
+                statusImageView.setImageResource(R.drawable.outgoing_sms)
+            }
+
             numberTextView.text = sms.number
             dateTextView.text = sms.date
             messageTextView.text = sms.message

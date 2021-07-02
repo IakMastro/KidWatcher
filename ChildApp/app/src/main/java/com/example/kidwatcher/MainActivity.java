@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		stopService(new Intent(this, TrackerService.class));
 		setContentView(R.layout.activity_main);
-		startService(new Intent(this, TrackerService.class));
 
 		int PERMISSIONS_CHECK = 1;
 		String[] PERMISSIONS = {
@@ -47,30 +46,36 @@ public class MainActivity extends AppCompatActivity
 	protected void onRestart()
 	{
 		super.onRestart();
+		stopService(new Intent(this, TrackerService.class));
 	}
 
 	@Override
 	protected void onStart()
 	{
 		super.onStart();
+		startService(new Intent(this, TrackerService.class));
+		//		stopService(new Intent(this, TrackerService.class));
 	}
 
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
+		//		stopService(new Intent(this, TrackerService.class));
 	}
 
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
+		//		stopService(new Intent(this, TrackerService.class));
 	}
 
 	@Override
 	protected void onStop()
 	{
 		super.onStop();
+		//		stopService(new Intent(this, TrackerService.class));
 	}
 
 	@Override
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
+		//		stopService(new Intent(this, TrackerService.class));
 		finish();
 	}
 
@@ -110,10 +116,10 @@ public class MainActivity extends AppCompatActivity
 		return true;
 	}
 
-    public void spy(View view)
+	public void spy(View view)
 	{
 		PackageManager packageManager = getPackageManager();
 		ComponentName componentName = new ComponentName(MainActivity.this, MainActivity.class);
 		packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-    }
+	}
 }

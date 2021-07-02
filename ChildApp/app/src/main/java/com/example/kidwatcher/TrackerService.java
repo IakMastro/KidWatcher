@@ -35,12 +35,21 @@ public class TrackerService extends Service implements LocationListener
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private LocationManager locationManager;
 	private Location location;
+	private String lat;
+	private String lon;
 
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
 		getContentResolver().registerContentObserver(Uri.parse("content://sms"), true, new smsOutgoing(new Handler()));
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		stopSelf();
 	}
 
 	@Nullable
@@ -101,17 +110,17 @@ public class TrackerService extends Service implements LocationListener
 
 			if (operation.equals("SMS"))
 			{
-//				Log.d("***TRACKERSERVICE", "***\nTRACKERSERVICE");
+				//				Log.d("***TRACKERSERVICE", "***\nTRACKERSERVICE");
 				databaseHandler.keepSMSLogs(date, status, number, message);
 			}
 			else if (operation.equals("Phone"))
 			{
 				databaseHandler.keepPhoneLogs(date, status, number, duration);
 			}
-//			else if (operation.equals("GPS"))
-//			{
-//				databaseHandler.keepLocationLogs(lat, lon);
-//			}
+			//			else if (operation.equals("GPS"))
+			//			{
+			//				databaseHandler.keepLocationLogs(lat, lon);
+			//			}
 		}
 	};
 
@@ -119,9 +128,9 @@ public class TrackerService extends Service implements LocationListener
 	public void onLocationChanged(@NonNull Location location)
 	{
 		this.location = location;
-		String lat = location.getLatitude() + "";
-		String lon = location.getLongitude() + "";
-//		Log.d("***onLocationChanged", "***\nLAT = " + lat + "\nLON = " + lon);
+		lat = location.getLatitude() + "";
+		lon = location.getLongitude() + "";
+		Log.e("***onLocationChanged", "***\nLAT = " + lat + "\nLON = " + lon);
 		databaseHandler.keepLocationLogs(lat, lon);
 	}
 

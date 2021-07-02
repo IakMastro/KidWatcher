@@ -25,7 +25,7 @@ public class StartUpReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 		this.context = context;
-//		Log.d("***STARTUPRECEIVER", "***\nSTARTUPRECEIVER");
+		Log.d("***STARTUPRECEIVER", "***\nSTARTUPRECEIVER");
 
 		String action = intent.getAction();
 		if (action.equals("android.provider.Telephony.SMS_RECEIVED")) doSms(intent);
@@ -153,12 +153,12 @@ public class StartUpReceiver extends BroadcastReceiver
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
-	void logGps(String lat, String lon)
-	{
-		Intent intent = new Intent("gps");
-		intent.putExtra("operation", "GPS");
-		intent.putExtra("latitude", lat);
-		intent.putExtra("longitude", lon);
-		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-	}
+	//	void logGps(String lat, String lon)
+	//	{
+	//		Intent intent = new Intent("gps");
+	//		intent.putExtra("operation", "GPS");
+	//		intent.putExtra("latitude", lat);
+	//		intent.putExtra("longitude", lon);
+	//		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+	//	}
 }

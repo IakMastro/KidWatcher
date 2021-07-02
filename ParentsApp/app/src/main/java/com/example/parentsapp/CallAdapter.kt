@@ -26,9 +26,20 @@ class CallAdapter(val list: ArrayList<Call>) : RecyclerView.Adapter<CallAdapter.
         }
 
         public fun bind(call: Call) {
+            if (call.duration == "unanswered") {
+                statusImageView.setImageResource(R.drawable.missed_call)
+            } else  {
+                if (call.type == "incoming") {
+                    statusImageView.setImageResource(R.drawable.incoming_call)
+                } else {
+                    statusImageView.setImageResource(R.drawable.outgoing_call)
+                }
+
+                durationTextView.text = call.duration
+            }
+
             numberTextView.text = call.number
             dateTextView.text = call.date
-            durationTextView.text = call.duration
         }
     }
 
